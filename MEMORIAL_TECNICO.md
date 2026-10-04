@@ -28,8 +28,8 @@ A escolha por **Java com Spring Boot** no backend e **TypeScript com React** no 
 * **Central de Ajuda e Suporte:** Implementação de uma tela de suporte para que os usuários possam abrir chamados de dúvidas, reportar falhas na aplicação e interagir com a equipe de atendimento.
 
 ### Decisões Diferentes em um Ambiente Corporativo de Produção
-* **Controle de Acessos (RBAC):** Evolução do backend para suportar papéis (`roles`) por usuário, restrição estrita para que apenas perfis com função de administrador possam cadastrar novos funcionários, e criação de uma tabela/página dedicada para o gerenciamento dinâmico (criação e exclusão) de categorias de solicitações.
+* **Controle de Acessos:** Evolução do backend para suportar papéis (`roles`) por usuário, restrição estrita para que apenas perfis com função de administrador possam cadastrar novos funcionários, e criação de uma tabela/página dedicada para o gerenciamento dinâmico (criação e exclusão) de categorias de solicitações.
 * **Auditoria e Histórico:** Desenvolvimento de uma tela de histórico restrita a administradores para rastreabilidade completa das alterações de status de todos os tickets (registrando quem alterou, o timestamp da modificação e os estados de origem e destino).
 * **Segurança de Autenticação:** Aplicação de mecanismo de *rate limit* no endpoint de login para bloqueio temporário após três tentativas consecutivas inválidas (seja por e-mail ou senha incorretos).
 * **Métricas e Relatórios Analíticos:** Implementação de relatórios gerenciais da plataforma calculando o tempo médio de resolução e transição de status dos chamados (tempo médio até entrar em atendimento e até a conclusão).
-* **Infraestrutura e Observabilidade:** Adição de camadas de cache (Redis), paginação otimizada no PostgreSQL, segurança avançada via Spring Security (JWT) e ferramentas de monitoramento de performance (APM/Prometheus).
+* **Infraestrutura e Observabilidade:** Adição de camadas de cache (Redis) e ferramentas de monitoramento de performance (APM/Prometheus).
