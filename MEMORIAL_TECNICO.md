@@ -17,8 +17,19 @@ A escolha por **Java com Spring Boot** no backend e **TypeScript com React** no 
 
 ---
 
-## 3. Análise Crítica e Visão de Produção
+## 3. Análise Crítica
 
-* **Escopo atual:** O projeto foca cirurgicamente nos fluxos essenciais exigidos (métricas do dashboard, listagem, tratamento de status e regras essenciais de negócio), priorizando a qualidade da entrega principal em detrimento de CRUDs genéricos.
-* **Limitações reais:** Em um ambiente corporativo de produção real com alto volume de acessos, a arquitetura monolítica atual precisaria evoluir para incluir paginação otimizada no banco de dados, estratégias de cache com Redis para o dashboard e uma camada de autenticação robusta baseada em tokens (JWT/OAuth2). 
-* **Conclusão:** A escolha das ferramentas garantiu que a aplicação fosse entregue com alta coesão estrutural, testabilidade isolada via JUnit/Mockito e containerização pronta via Docker, cumprindo o objetivo de demonstrar engenharia de software limpa e defensiva.
+### Limitações da Solução Implementada
+* O escopo atual focou nos fluxos essenciais (dashboard, listagem, regras de negócio centrais e tratamento de status), deixando funcionalidades corporativas avançadas para fases futuras.
+* Ausência de mecanismos nativos de auditoria detalhada de alterações e de proteção avançada contra ataques de força bruta no endpoint de autenticação.
+
+### Melhorias Futuras e Requisitos a Aperfeiçoar
+* **Gestão de Perfil:** Criação de uma tela dedicada para gerenciamento de perfil, permitindo que o usuário atualize suas informações cadastrais, e-mail e senha com validações seguras.
+* **Central de Ajuda e Suporte:** Implementação de uma tela de suporte para que os usuários possam abrir chamados de dúvidas, reportar falhas na aplicação e interagir com a equipe de atendimento.
+
+### Decisões Diferentes em um Ambiente Corporativo de Produção
+* **Controle de Acessos (RBAC):** Evolução do backend para suportar papéis (`roles`) por usuário, restrição estrita para que apenas perfis com função de administrador possam cadastrar novos funcionários, e criação de uma tabela/página dedicada para o gerenciamento dinâmico (criação e exclusão) de categorias de solicitações.
+* **Auditoria e Histórico:** Desenvolvimento de uma tela de histórico restrita a administradores para rastreabilidade completa das alterações de status de todos os tickets (registrando quem alterou, o timestamp da modificação e os estados de origem e destino).
+* **Segurança de Autenticação:** Aplicação de mecanismo de *rate limit* no endpoint de login para bloqueio temporário após três tentativas consecutivas inválidas (seja por e-mail ou senha incorretos).
+* **Métricas e Relatórios Analíticos:** Implementação de relatórios gerenciais da plataforma calculando o tempo médio de resolução e transição de status dos chamados (tempo médio até entrar em atendimento e até a conclusão).
+* **Infraestrutura e Observabilidade:** Adição de camadas de cache (Redis), paginação otimizada no PostgreSQL, segurança avançada via Spring Security (JWT) e ferramentas de monitoramento de performance (APM/Prometheus).
