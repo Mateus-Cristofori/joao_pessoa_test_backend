@@ -7,11 +7,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class ListAllTicketsConverter {
 
-    public TicketResponse convert(Ticket ticket) {
+    public TicketResponse convert(Ticket ticket, String email) {
         return TicketResponse
             .builder()
             .id(ticket.getId())
             .userId(ticket.getUserId())
+            .userEmail(email)
             .code(ticket.getCode())
             .title(ticket.getTitle())
             .description(ticket.getDescription())

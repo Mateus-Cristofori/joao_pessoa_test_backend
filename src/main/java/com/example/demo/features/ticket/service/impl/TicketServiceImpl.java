@@ -9,6 +9,8 @@ import com.example.demo.features.ticket.model.response.TicketResponse;
 import com.example.demo.features.ticket.repository.TicketRepository;
 import com.example.demo.features.ticket.repository.entity.Ticket;
 import com.example.demo.features.ticket.service.TicketService;
+import com.example.demo.features.user.repository.UserRepository;
+import com.example.demo.features.user.repository.entity.User;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +18,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -25,6 +30,7 @@ public class TicketServiceImpl implements TicketService {
 
     private final TicketRepository ticketRepository;
     private final ListAllTicketsConverter listAllTicketsConverter;
+    private final UserRepository userRepository;
 
     @Override
     public TicketResponse createTicket(UUID userId, CreateTicketRequest createTicketRequest) {
@@ -55,9 +61,20 @@ public class TicketServiceImpl implements TicketService {
         log.info("Listing all tickets for frontend filtering");
         List<Ticket> tickets = ticketRepository.findAll();
 
+        Set<UUID> userIds = tickets.stream()
+            .map(Ticket::getUserId)
+            .collect(Collectors.toSet());
+
+        Map<UUID, String> emailsByUserId = userRepository.findAllById(userIds)
+            .stream()
+            .collect(Collectors.toMap(User::getId, User::getEmail));
+
         return tickets
             .stream()
-            .map(listAllTicketsConverter::convert)
+            .map(ticket -> listAllTicketsConverter.convert(
+                ticket,
+                emailsByUserId.get(ticket.getUserId())
+            ))
             .toList();
     }
 

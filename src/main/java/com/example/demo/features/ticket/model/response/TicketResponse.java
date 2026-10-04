@@ -13,6 +13,7 @@ import java.util.UUID;
 public class TicketResponse {
     private UUID id;
     private UUID userId;
+    private String userEmail;
     private String code;
     private String title;
     private String description;
